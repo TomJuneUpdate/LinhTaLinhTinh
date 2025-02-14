@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+  devtools:
+    add-properties: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/tom_shp
+    username: root
+    password: 142857
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

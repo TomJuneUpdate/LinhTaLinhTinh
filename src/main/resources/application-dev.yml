@@ -1,0 +1,27 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  devtools:
+    add-properties: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/tom_shp
+    username: root
+    password: 142857
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    show-sql: true
+
+jwt:
+  secretKey: dev
+
+#springdoc:
+#  api-docs:
+#    enabled: true
+#  swagger-ui:
+#    enabled: true
