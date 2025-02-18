@@ -5,12 +5,14 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 public class ResponseSuccess extends ResponseEntity<ResponseSuccess.Payload> {
+
+    // PUT PATCH DELETE
     public ResponseSuccess(HttpStatus status, String message) {
         super(new Payload(status.value(), message), HttpStatus.OK);
     }
-
+    // GET POST
     public ResponseSuccess(HttpStatusCode status, String message, Object data) {
-        super(new Payload(status.value(), message, data), HttpStatus.OK);
+        super(new Payload(status.value(), message, data), status);
     }
 
     public static class Payload {
