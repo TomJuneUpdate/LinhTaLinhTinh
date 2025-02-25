@@ -1,11 +1,13 @@
 package com.shopapp.backendshop.controller;
 
 import com.shopapp.backendshop.dto.request.UserRequestDTO;
+import com.shopapp.backendshop.dto.response.ResponseData;
 import com.shopapp.backendshop.dto.response.ResponseSuccess;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -17,51 +19,57 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
-@RequestMapping("/user")
+@RequestMapping("users")
+@Validated // Bắt buộc để validation method parameters hoạt động
 public class UserController {
 
-    @PostMapping("/")
+    @PostMapping()
 //  @ResponseStatus(HttpStatus.CREATED)
-    public ResponseSuccess addUser(@Valid @RequestBody UserRequestDTO user) {
-        System.out.println("Adding user: " + user.getFirstName());
-        return new ResponseSuccess(HttpStatus.CREATED, "User added successfully");
+    public ResponseData<Integer> addUser(@Valid @RequestBody UserRequestDTO user) {
+            System.out.println("Adding user: " + user.getFirstName());
+            return new ResponseData<>(HttpStatus.CREATED.value(), "User added successfully", 1);
     }
 
     @PutMapping("/{userId}")
 //    @ResponseStatus(HttpStatus.ACCEPTED)
-    public String updateUser(@PathVariable("userId") int id, @RequestBody UserRequestDTO user) {
-        System.out.println("User update " + id);
-        return "User update" + id;
+    public ResponseData<?> updateUser(@PathVariable @Min(value = 1, message = "UserId must be than 1") int userId, @Valid @RequestBody UserRequestDTO user) {
+        System.out.println("Request update userId=" + userId);
+        return new ResponseData<>(HttpStatus.ACCEPTED.value(), "User updated successfully");
     }
 
     @PatchMapping("/{userId}")
 //    @ResponseStatus(HttpStatus.ACCEPTED)
-    public String changeStatusUser(@PathVariable("userId") int id, @RequestParam(required = false) boolean status) {
+    public ResponseSuccess changeStatusUser(@PathVariable("userId") @Min(1)  int id, @RequestParam(required = false) boolean status) {
         System.out.println("User change status  " + id);
-        return "Update status " + id;
+        return new ResponseSuccess(HttpStatus.ACCEPTED, "User change status successfully");
     }
 
     @DeleteMapping("/{userId}")
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String deleteUser(@PathVariable("userId") int id) {
+    public ResponseSuccess deleteUser(@PathVariable("userId") int id) {
         System.out.println("delete user " + id);
-        return "Delete user" + id;
+        return new ResponseSuccess(HttpStatus.NO_CONTENT, "User delete successfully");
     }
 
     @GetMapping("/{userId}")
 //    @ResponseStatus(HttpStatus.OK)
-    public String getUserById(@PathVariable("userId") @Min(1) int id) {
-        System.out.println("delete user " + id);
-        return "Get user by " + id;
+    public ResponseSuccess getUserById(@PathVariable("userId") int id) {
+        System.out.println("user " + id);
+        return new ResponseSuccess(HttpStatus.OK, "User found successfully", id);
     }
 
-    @GetMapping("/")
+    @GetMapping()
 //    @ResponseStatus(HttpStatus.OK)
-    public String getAllUser(@RequestParam(required = false) String email,
-                             @RequestParam(defaultValue = "0") @Min(0) int page,
-                             @RequestParam(defaultValue = "10") @Max(10) int size) {
+    public ResponseData<List<UserRequestDTO>> getAllUser(
+            @RequestParam(required = false) String email,
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "10") @Max(10) int size) {
+
         System.out.println("get user " + page + " " + size);
-        return "Get all users";
+        return new ResponseData<>(HttpStatus.OK.value(), "Get all user successfully", new ArrayList<>());
     }
 }

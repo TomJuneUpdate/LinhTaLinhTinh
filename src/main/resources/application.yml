@@ -7,3 +7,6 @@ spring:
     name: BackEndShop
   profiles:
     active: @spring.profiles.active@
+  messages:
+    basename: messages
+    encoding: UTF-8

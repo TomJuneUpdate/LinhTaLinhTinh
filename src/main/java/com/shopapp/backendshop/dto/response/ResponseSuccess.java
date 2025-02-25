@@ -1,5 +1,6 @@
 package com.shopapp.backendshop.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ public class ResponseSuccess extends ResponseEntity<ResponseSuccess.Payload> {
     public static class Payload {
         private final int status;
         private final String message;
+        @JsonInclude(JsonInclude.Include.NON_NULL) //Neu tra ve null json ko hien thi
         private Object data;
 
         public Payload(int status, String message) {

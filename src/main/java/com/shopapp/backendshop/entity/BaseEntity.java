@@ -12,7 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+//@EntityListeners(AuditingEntityListener.class)
 @Data
 public class BaseEntity {
 
@@ -22,10 +22,10 @@ public class BaseEntity {
     @LastModifiedDate
     private LocalDateTime modifiedDate;
 
-    @CreatedBy
+//    @CreatedBy
     private String createdBy;
 
-    @LastModifiedBy
+//    @LastModifiedBy
     private String updatedBy;
 
 }
