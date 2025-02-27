@@ -1,5 +1,6 @@
 package com.shopapp.backendshop.controller;
 
+import com.shopapp.backendshop.config.Translator;
 import com.shopapp.backendshop.dto.request.UserRequestDTO;
 import com.shopapp.backendshop.dto.response.ResponseData;
 import com.shopapp.backendshop.dto.response.ResponseSuccess;
@@ -31,7 +32,7 @@ public class UserController {
 //  @ResponseStatus(HttpStatus.CREATED)
     public ResponseData<Integer> addUser(@Valid @RequestBody UserRequestDTO user) {
             System.out.println("Adding user: " + user.getFirstName());
-            return new ResponseData<>(HttpStatus.CREATED.value(), "User added successfully", 1);
+            return new ResponseData<>(HttpStatus.CREATED.value(), Translator.toLocale("add.user"), 1);
     }
 
     @PutMapping("/{userId}")

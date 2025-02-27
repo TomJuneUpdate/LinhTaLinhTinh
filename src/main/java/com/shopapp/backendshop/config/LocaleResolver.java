@@ -14,8 +14,13 @@ import java.util.Locale;
 @Configuration
 public class LocaleResolver extends AcceptHeaderLocaleResolver implements WebMvcConfigurer {
 
-    List<Locale> LOCALES = List.of(new Locale("en"), new Locale("fr"));
+    List<Locale> LOCALES = List.of(new Locale("en"), new Locale("vi"));
 
+    /**
+     * Lấy giá trị language header
+     * @param request
+     * @return
+     */
     @Override
     public Locale resolveLocale(HttpServletRequest request) {
         String languageHeader = request.getHeader("Accept-Language");
@@ -27,7 +32,7 @@ public class LocaleResolver extends AcceptHeaderLocaleResolver implements WebMvc
     @Bean
     public ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource rs = new ResourceBundleMessageSource();
-        rs.setBasename("messages");
+        rs.setBasename("msg");
         rs.setDefaultEncoding("UTF-8");
         rs.setUseCodeAsDefaultMessage(true);
         rs.setCacheSeconds(3600);
