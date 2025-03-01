@@ -17,6 +17,12 @@ spring:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
     show-sql: true
 
+openapi:
+  service:
+    api-docs: api service
+    server: http://localhost:8080
+    title: API Service demo
+    version: 1.0
 jwt:
   secretKey: dev
 
